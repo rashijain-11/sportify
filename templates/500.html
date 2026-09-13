@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Server Error (500) — Sportify{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center my-auto">
+    <div class="row justify-content-center py-5">
+        <div class="col-lg-6 col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 p-5 bg-white">
+                <div class="mb-4">
+                    <span class="display-1 fw-extrabold text-danger" style="font-weight: 900;">500</span>
+                    <div class="text-secondary mt-2">
+                        <i class="bi bi-exclamation-octagon fs-1 text-danger"></i>
+                    </div>
+                </div>
+                <h2 class="h3 fw-bold text-navy mb-3">Temporary Server Glitch</h2>
+                <p class="text-secondary mb-4 leading-relaxed">
+                    Our technical referees are reviewing the play. Please try refreshing the page or head back to the store.
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="{% url 'home' %}" class="btn btn-sport px-4 py-2">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Return to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

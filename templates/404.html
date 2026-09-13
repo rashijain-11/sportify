@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found (404) — Sportify{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center my-auto">
+    <div class="row justify-content-center py-5">
+        <div class="col-lg-6 col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 p-5 bg-white">
+                <div class="mb-4">
+                    <span class="display-1 fw-extrabold text-primary" style="font-weight: 900; color: #0284c7 !important;">404</span>
+                    <div class="text-secondary mt-2">
+                        <i class="bi bi-compass fs-1 text-muted"></i>
+                    </div>
+                </div>
+                <h2 class="h3 fw-bold text-navy mb-3">Page or Equipment Not Found</h2>
+                <p class="text-secondary mb-4 leading-relaxed">
+                    The sports gear or page you're looking for might have been moved, renamed, or is temporarily out of play.
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="{% url 'shop' %}" class="btn btn-sport px-4 py-2">
+                        <i class="bi bi-grid me-2"></i>Browse All Equipment
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-light border px-4 py-2 text-dark">
+                        <i class="bi bi-house me-2"></i>Return Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

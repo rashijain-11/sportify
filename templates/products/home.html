@@ -105,15 +105,15 @@
 
         <div class="row g-4">
             {% for product in featured_products %}
-            <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-12">
                 <div class="product-card">
-                    <div class="product-image-wrap">
+                    <div class="product-image-wrap" style="height: 220px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-color: #f8fafc;">
                         {% if product.discount_percent > 0 %}
                             <span class="badge-discount">-{{ product.discount_percent }}% OFF</span>
                         {% endif %}
                         <span class="badge-category">{{ product.category.name }}</span>
-                        <a href="{% url 'product_detail' product.slug %}" class="w-100 h-100">
-                            <img src="{{ product.display_image }}" alt="{{ product.name }}" loading="lazy">
+                        <a href="{% url 'product_detail' product.slug %}" class="d-flex align-items-center justify-content-center w-100 h-100 overflow-hidden text-decoration-none">
+                            <img src="{{ product.display_image }}" alt="{{ product.name }}" loading="lazy" class="img-fluid" style="max-height: 220px; width: 100%; object-fit: contain; display: block;">
                         </a>
                     </div>
 
