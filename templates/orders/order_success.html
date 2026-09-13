@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmed — Sportify{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Success Card Banner -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center mb-4 bg-white">
+                <div class="mb-3 text-success">
+                    <i class="bi bi-check-circle-fill" style="font-size: 4rem;"></i>
+                </div>
+                <h1 class="h2 fw-bold text-navy mb-2">Thank You for Your Order!</h1>
+                <p class="text-secondary mb-3">
+                    Your sports equipment order has been confirmed and is now being packed by our warehouse team.
+                </p>
+                <div class="d-inline-block bg-light px-4 py-2 rounded-pill border fw-bold text-primary mb-2">
+                    Order Reference: <span class="text-dark">{{ order.order_number }}</span>
+                </div>
+                <p class="small text-muted mb-0">A confirmation receipt has been simulated to <strong>{{ order.email }}</strong></p>
+            </div>
+
+            <!-- Order Details Card -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                    <div>
+                        <h5 class="fw-bold mb-0 text-navy">Order Summary</h5>
+                        <small class="text-muted">Placed on {{ order.created_at|date:"M d, Y • h:i A" }}</small>
+                    </div>
+                    <div>
+                        <span class="badge bg-success-subtle text-success border border-success border-opacity-25 px-3 py-2 fw-bold">
+                            Payment: {{ order.payment_status }} ({{ order.get_payment_method_display }})
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="row mb-4 g-3">
+                    <div class="col-md-6">
+                        <h6 class="small text-uppercase fw-bold text-muted mb-1">Delivery Recipient</h6>
+                        <p class="mb-0 fw-semibold text-dark">{{ order.full_name }}</p>
+                        <p class="small text-secondary mb-0">{{ order.email }} • {{ order.phone }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="small text-uppercase fw-bold text-muted mb-1">Shipping Destination</h6>
+                        <p class="small text-secondary mb-0">
+                            {{ order.address }}<br>
+                            {{ order.city }}, {{ order.state }} {{ order.postal_code }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Items Table -->
+                <div class="table-responsive mb-3">
+                    <table class="table align-middle">
+                        <thead class="table-light small text-uppercase text-secondary">
+                            <tr>
+                                <th>Item</th>
+                                <th>Variant</th>
+                                <th>Price</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td class="fw-bold text-dark">{{ item.product_name }}</td>
+                                <td><span class="badge bg-light text-secondary border">{{ item.size }}</span></td>
+                                <td>₹{{ item.price }}</td>
+                                <td class="text-center">{{ item.quantity }}</td>
+                                <td class="text-end fw-bold">₹{{ item.get_total_price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="border-top">
+                            <tr>
+                                <td colspan="4" class="text-end text-secondary">Subtotal:</td>
+                                <td class="text-end fw-bold">₹{{ order.subtotal }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-end text-secondary">Shipping:</td>
+                                <td class="text-end fw-bold">
+                                    {% if order.shipping == 0 %}
+                                        <span class="text-success">FREE</span>
+                                    {% else %}
+                                        ₹{{ order.shipping }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-end fs-5 fw-bold text-dark">Grand Total:</td>
+                                <td class="text-end fs-5 fw-extrabold text-primary" style="font-weight: 800; color: #0284c7 !important;">
+                                    ₹{{ order.total_amount }}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 justify-content-center mt-3 pt-3 border-top">
+                    <a href="{% url 'shop' %}" class="btn btn-sport px-4">
+                        <i class="bi bi-bag me-1"></i> Continue Shopping
+                    </a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="btn btn-light border px-4">
+                        <i class="bi bi-clock-history me-1"></i> View All My Orders
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

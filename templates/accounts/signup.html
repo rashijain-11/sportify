@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Create an Account — Sportify{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card border-0 shadow rounded-4 p-4 p-md-5 bg-white">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 64px; height: 64px;">
+                        <i class="bi bi-person-plus-fill fs-2" style="color: #0284c7 !important;"></i>
+                    </div>
+                    <h2 class="h4 fw-bold text-navy mb-1">Join the Sportify Community</h2>
+                    <p class="text-secondary small">Create your athlete account to order gear, track shipments, and receive member perks.</p>
+                </div>
+
+                <form method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label small fw-semibold text-dark">First Name</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}<div class="text-danger small">{{ form.first_name.errors }}</div>{% endif %}
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label small fw-semibold text-dark">Last Name</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}<div class="text-danger small">{{ form.last_name.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}<div class="text-danger small">{{ form.username.errors }}</div>{% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Email Address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors }}</div>{% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Password</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}<div class="text-danger small">{{ form.password1.errors }}</div>{% endif %}
+                        <small class="text-muted" style="font-size: 0.78rem;">Must contain at least 8 characters.</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-dark">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}<div class="text-danger small">{{ form.password2.errors }}</div>{% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-sport btn-lg w-100 mb-3 shadow-sm">
+                        Create My Account
+                    </button>
+
+                    <div class="text-center small text-secondary">
+                        Already have an account? <a href="{% url 'login' %}" class="fw-bold text-primary text-decoration-none">Log In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

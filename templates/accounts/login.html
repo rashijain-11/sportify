@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Athlete Login — Sportify{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow rounded-4 p-4 p-md-5 bg-white">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 64px; height: 64px;">
+                        <i class="bi bi-person-fill fs-2" style="color: #0284c7 !important;"></i>
+                    </div>
+                    <h2 class="h4 fw-bold text-navy mb-1">Welcome Back</h2>
+                    <p class="text-secondary small">Log in to track orders, manage addresses and access wishlist.</p>
+                </div>
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-dark">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person text-muted"></i></span>
+                            <input type="text" name="username" class="form-control border-start-0 ps-0" placeholder="Enter username" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-dark">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
+                            <input type="password" name="password" class="form-control border-start-0 ps-0" placeholder="Enter password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-sport btn-lg w-100 mb-3 shadow-sm">
+                        Log In to Sportify
+                    </button>
+
+                    <!-- Demo Credentials Tip for beginner testing -->
+                    <div class="alert alert-light border small text-muted text-center mb-4 py-2">
+                        <i class="bi bi-info-circle me-1 text-primary"></i> Demo Admin: <strong>admin</strong> / <strong>admin123</strong>
+                    </div>
+
+                    <div class="text-center small text-secondary">
+                        Don't have an account? <a href="{% url 'signup' %}" class="fw-bold text-primary text-decoration-none">Sign Up Here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

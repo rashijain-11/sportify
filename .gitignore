@@ -1,0 +1,26 @@
+# Python virtual environments
+venv/
+env/
+ENV/
+.env
+
+# Python byte code & caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Static and media directories collected/uploaded
+staticfiles/
+media/products/
+media/categories/
+
+# Database (keep db.sqlite3 ignored for production or include if desired)
+db.sqlite3-journal
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

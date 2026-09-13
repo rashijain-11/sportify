@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile & Orders — Sportify{% endblock %}
+
+{% block content %}
+<div class="bg-light py-3 border-bottom mb-4">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">My Profile</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container py-3">
+    <!-- User Welcome Banner -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-3" style="width: 64px; height: 64px; background-color: #0284c7 !important;">
+                    {{ user.username|first|upper }}
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0 text-navy">{{ user.get_full_name|default:user.username }}</h3>
+                    <p class="text-secondary small mb-0">{{ user.email }} • Member since {{ user.date_joined|date:"M Y" }}</p>
+                </div>
+            </div>
+            <div>
+                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                        <i class="bi bi-box-arrow-right me-1"></i> Sign Out
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left: Delivery Address Settings -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                <h5 class="fw-bold mb-3 text-navy">
+                    <i class="bi bi-truck text-primary me-2"></i>Default Shipping Address
+                </h5>
+                <form method="post" action="{% url 'profile' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Phone Number</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Street Address</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">City</label>
+                        {{ form.city }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">State / Province</label>
+                        {{ form.state }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Postal / ZIP Code</label>
+                        {{ form.postal_code }}
+                    </div>
+                    <button type="submit" class="btn btn-sport w-100">
+                        Update Shipping Info
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right: Order History -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                <h5 class="fw-bold mb-3 text-navy">
+                    <i class="bi bi-clock-history text-primary me-2"></i>Previous Orders ({{ orders.count }})
+                </h5>
+
+                {% if orders %}
+                    <div class="d-flex flex-column gap-3">
+                        {% for order in orders %}
+                        <div class="border rounded-3 p-3 bg-light">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                <div>
+                                    <span class="fw-bold text-dark me-2">Order #{{ order.order_number }}</span>
+                                    <small class="text-muted">{{ order.created_at|date:"M d, Y" }}</small>
+                                </div>
+                                <div>
+                                    <span class="badge {% if order.order_status == 'Delivered' %}bg-success{% else %}bg-primary{% endif %} rounded-pill px-3 py-1">
+                                        {{ order.order_status }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Order Items List -->
+                            <div class="mb-2">
+                                {% for item in order.items.all %}
+                                <div class="d-flex justify-content-between small text-secondary py-1">
+                                    <span>{{ item.quantity }} × {{ item.product_name }} ({{ item.size }})</span>
+                                    <span class="fw-semibold text-dark">₹{{ item.get_total_price }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center pt-2 border-top">
+                                <span class="small text-muted">Paid via <strong>{{ order.get_payment_method_display }}</strong></span>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="fw-extrabold text-navy" style="font-weight: 800;">Total: ₹{{ order.total_amount }}</span>
+                                    <a href="{% url 'order_success' order.order_number %}" class="btn btn-sm btn-outline-primary rounded-pill">
+                                        View Receipt
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <!-- No orders yet -->
+                    <div class="text-center py-5">
+                        <i class="bi bi-box-seam fs-1 text-muted opacity-50 mb-2 d-block"></i>
+                        <h6 class="fw-bold text-navy">No Orders Yet</h6>
+                        <p class="text-secondary small mb-3">You haven't purchased any equipment yet.</p>
+                        <a href="{% url 'shop' %}" class="btn btn-sport btn-sm px-3">Start Shopping</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

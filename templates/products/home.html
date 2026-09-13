@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sportify — Premium Sports Equipment & Accessories{% endblock %}
+
+{% block content %}
+<!-- 1. Hero Section -->
+<section class="hero-section">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="hero-badge">
+                    <i class="bi bi-fire text-warning"></i>
+                    <span>Official 2026 Sports Gear Collection</span>
+                </div>
+                <h1 class="hero-title">
+                    Gear Up. Play Hard.<br>
+                    <span style="color: #38bdf8;">Perform Better.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Premium sports equipment and accessories for every game, every athlete. Engineered for peak performance, endurance, and champions.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'shop' %}" class="btn btn-sport btn-lg px-4 shadow">
+                        <i class="bi bi-bag-check me-2"></i>Shop Now
+                    </a>
+                    <a href="#categories-section" class="btn btn-outline-light btn-lg px-4 rounded-3 fw-semibold">
+                        <i class="bi bi-grid me-2"></i>Explore Categories
+                    </a>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="row mt-5 pt-3 border-top border-light border-opacity-10 text-white">
+                    <div class="col-4">
+                        <h4 class="fw-bold mb-0 text-info">100%</h4>
+                        <small class="text-light opacity-75">Genuine Gear</small>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="fw-bold mb-0 text-info">50k+</h4>
+                        <small class="text-light opacity-75">Happy Athletes</small>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="fw-bold mb-0 text-info">4.9 ★</h4>
+                        <small class="text-light opacity-75">Customer Rating</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Visual -->
+            <div class="col-lg-6">
+                <div class="hero-image-card">
+                    <img src="https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=1000&auto=format&fit=crop&q=80" alt="Athletes Training" class="img-fluid w-100">
+                    <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);">
+                        <span class="badge bg-primary mb-1">New Arrival</span>
+                        <h5 class="text-white fw-bold mb-0">Tour-Ready Carbon Gear</h5>
+                        <small class="text-light opacity-75">Tested by certified coaches and national athletes</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Sports Categories Section -->
+<section class="py-5" id="categories-section" style="background-color: #f8fafc;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-light text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill fw-bold text-uppercase small mb-2">Explore By Sport</span>
+            <h2 class="fw-extrabold text-navy" style="font-weight: 800; color: #0f172a;">Sports Categories</h2>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">
+                Find top-tier equipment tailored specifically for your sport. Pick a category to browse bats, balls, rackets, protective gear, and footwear.
+            </p>
+        </div>
+
+        <div class="row g-3 g-md-4">
+            {% for cat in categories %}
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+                <a href="{% url 'shop_by_category' cat.slug %}" class="category-card">
+                    <div class="category-icon-box">
+                        <i class="bi {{ cat.icon }}"></i>
+                    </div>
+                    <h5 class="category-name">{{ cat.name }}</h5>
+                    <div class="category-count">
+                        {{ cat.products.count }} Products Available
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 3. Featured Products Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+            <div>
+                <span class="badge bg-light text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill fw-bold text-uppercase small mb-2">Pro Performance</span>
+                <h2 class="fw-bold mb-0" style="color: #0f172a;">Featured Products</h2>
+            </div>
+            <a href="{% url 'shop' %}" class="btn btn-sport-outline mt-3 mt-sm-0">
+                View Full Catalog &rarr;
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for product in featured_products %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="product-card">
+                    <div class="product-image-wrap">
+                        {% if product.discount_percent > 0 %}
+                            <span class="badge-discount">-{{ product.discount_percent }}% OFF</span>
+                        {% endif %}
+                        <span class="badge-category">{{ product.category.name }}</span>
+                        <a href="{% url 'product_detail' product.slug %}" class="w-100 h-100">
+                            <img src="{{ product.display_image }}" alt="{{ product.name }}" loading="lazy">
+                        </a>
+                    </div>
+
+                    <div class="product-body">
+                        <!-- Rating & Reviews -->
+                        <div class="d-flex align-items-center gap-1 mb-2">
+                            <span class="rating-stars">
+                                <i class="bi bi-star-fill"></i>
+                            </span>
+                            <span class="small fw-bold">{{ product.rating }}</span>
+                            <span class="small text-muted">({{ product.review_count }})</span>
+                        </div>
+
+                        <!-- Product Title -->
+                        <a href="{% url 'product_detail' product.slug %}" class="product-title">
+                            {{ product.name }}
+                        </a>
+
+                        <!-- Short Description -->
+                        <p class="product-desc">
+                            {{ product.description }}
+                        </p>
+
+                        <!-- Price Row -->
+                        <div class="product-price-row">
+                            <span class="price-current">₹{{ product.current_price }}</span>
+                            {% if product.discount_price and product.price > product.discount_price %}
+                                <span class="price-original">₹{{ product.price }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="product-actions">
+                            <form method="post" action="{% url 'cart_add' product.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="size" value="{{ product.size_list.0 }}">
+                                <button type="submit" class="btn btn-sport w-100 btn-sm">
+                                    <i class="bi bi-cart-plus me-1"></i>Add to Cart
+                                </button>
+                            </form>
+                            <a href="{% url 'product_detail' product.slug %}" class="btn btn-light border btn-sm" title="View Details">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 4. Special Promotional Offer Section -->
+<section class="py-4">
+    <div class="container">
+        <div class="special-offer-banner">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <span class="offer-tag">
+                        <i class="bi bi-tag-fill me-1"></i> Limited Time Flash Deal
+                    </span>
+                    <h2 class="display-5 fw-bold mb-3">
+                        Gear Up & Save Up To 40%
+                    </h2>
+                    <p class="lead mb-4 text-light opacity-90">
+                        Upgrade your training arsenal with high-performance cricket bats, FIFA match footballs, carbon running shoes, and gym essentials at exclusive tournament discounts.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{% url 'shop' %}" class="btn btn-light text-primary fw-bold px-4 py-3 rounded-3 shadow">
+                            Shop Discounted Gear Now
+                        </a>
+                        <a href="{% url 'shop_by_category' 'gym-fitness' %}" class="btn btn-outline-light px-4 py-3 rounded-3 fw-bold">
+                            Explore Fitness Gear
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center text-lg-end">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80" alt="Special Promo Shoes" class="img-fluid rounded-4 shadow-lg" style="max-height: 280px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Why Choose Sportify Section -->
+<section class="py-5" style="background-color: #ffffff;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-light text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill fw-bold text-uppercase small mb-2">Our Promise</span>
+            <h2 class="fw-bold" style="color: #0f172a;">Why Athletes Choose Sportify</h2>
+            <p class="text-secondary mx-auto" style="max-width: 550px;">
+                We are passionate about sport and committed to delivering the ultimate equipment shopping experience.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Quality Products -->
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-circle">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <h6 class="fw-bold mb-2">Quality Products</h6>
+                    <p class="small text-muted mb-0">100% authentic gear sourced from top brands.</p>
+                </div>
+            </div>
+            <!-- 2. Affordable Prices -->
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-circle">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <h6 class="fw-bold mb-2">Affordable Prices</h6>
+                    <p class="small text-muted mb-0">Competitive wholesale-direct sports pricing.</p>
+                </div>
+            </div>
+            <!-- 3. Fast Delivery -->
+            <div class="col-lg-2 col-md-4 col-6">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-circle">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h6 class="fw-bold mb-2">Fast Delivery</h6>
+                    <p class="small text-muted mb-0">Expedited 48-hour delivery on all equipment.</p>
+                </div>
+            </div>
+            <!-- 4. Secure Payments -->
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-circle">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h6 class="fw-bold mb-2">Secure Payments</h6>
+                    <p class="small text-muted mb-0">Encrypted mock checkout with cards, UPI, and COD.</p>
+                </div>
+            </div>
+            <!-- 5. Easy Returns -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="feature-box h-100">
+                    <div class="feature-icon-circle">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <h6 class="fw-bold mb-2">Easy Returns</h6>
+                    <p class="small text-muted mb-0">Hassle-free 30-day return & exchange policy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
