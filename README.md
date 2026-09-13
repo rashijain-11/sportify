@@ -1,154 +1,153 @@
 # ⚡ Sportify — Modern Sports Equipment & Accessories E-Commerce
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/rashijain-11/sportify)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/rashijain-11/sportify)
-
-Sportify is a modern, responsive, and beginner-friendly e-commerce web application built using **Python and Django**. It allows users to browse sports gear across 8 popular sports categories, filter by price and sport, inspect high-resolution product details, select sizes/variants, manage a persistent shopping cart, checkout through a mock payment gateway, and manage user accounts with full order histories.
+Sportify is a clean, responsive, and beginner-friendly e-commerce web application built using **Python + Django**, styled with **Bootstrap 5** and custom athletic CSS, and priced in **Indian Rupees (₹ / INR)**. It features a complete store catalog of 40 realistic products across 8 sports categories, dynamic search, price filtering, size/variant selection, a shopping cart, mock checkout with UPI/Card/COD, and customer order management.
 
 ---
 
-## 📁 Project Folder Structure
+## 🌐 Live Deployments & Cloud Links
+
+Access the deployed application and 1-click cloud deployment blueprints:
+
+- 🚀 **Vercel Live Website:** [Sportify — Premium Sports Equipment & Accessories](https://sportify-black.vercel.app/)
+- ☁️ **Render 1-Click Deploy:** [Deploy on Render](https://render.com/deploy?repo=https://github.com/rashijain-11/sportify)
+- 📊 **Render Cloud Dashboard:** [Render Management Dashboard](https://dashboard.render.com/)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/rashijain-11/sportify)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/rashijain-11/sportify)
+
+---
+
+## 📁 Project Structure & Architecture
+
+Sportify follows a clean, modular Django architecture:
 
 ```
 sportify/
 │
-├── manage.py                   # Command-line utility to run, migrate, and seed your project
-├── db.sqlite3                  # The local SQLite database file
+├── manage.py                   # Django CLI tool to run the dev server, migrate, and seed data
+├── db.sqlite3                  # Local SQLite database (persists categories, products, orders)
+├── requirements.txt            # Python dependencies (Django, Pillow, Gunicorn, WhiteNoise)
+├── render.yaml                 # Infrastructure blueprint for Render (Free tier, Singapore region)
+├── vercel.json                 # Deployment configuration for Vercel serverless Python
+├── build.sh                    # Build script for production deployments (installs packages & collects static)
 │
-├── sportify/                   # Core project configuration package
-│   ├── __init__.py             # Marks directory as a Python package
-│   ├── settings.py             # Global settings (Installed apps, database, static/media, auth)
-│   ├── urls.py                 # Main URL router directing traffic to each app
-│   ├── context_processors.py   # Global variables (categories, cart badge count) for all pages
-│   ├── asgi.py                 # ASGI configuration for async web servers
-│   └── wsgi.py                 # WSGI configuration for production servers
+├── sportify/                   # Core Project Settings
+│   ├── settings.py             # App configuration, middleware, INR currency logic, static & media
+│   ├── urls.py                 # Root URL router
+│   ├── wsgi.py                 # WSGI production server entry point (Gunicorn & WhiteNoise)
+│   └── context_processors.py   # Global context for navbar category dropdown and cart badge
 │
-├── products/                   # Catalog, Categories, Search, and Filtering
-│   ├── models.py               # Category and Product database models
-│   ├── views.py                # Logic for Homepage, Shop catalog, and Product detail pages
-│   ├── urls.py                 # URL routes for products (/shop/, /product/<slug>/, etc.)
-│   ├── admin.py                # Django admin configuration for products & categories
-│   ├── tests.py                # Automated tests for catalog and products
+├── products/                   # Storefront & Catalog Management
+│   ├── models.py               # Category and Product models (prices, discounts, ratings, variants)
+│   ├── views.py                # Homepage, Shop catalog (search, filter, sort, paginate), Product detail
+│   ├── urls.py                 # Storefront routes (/, /shop/, /category/<slug>/, /product/<slug>/)
+│   ├── admin.py                # Admin portal configuration to manage inventory
 │   └── management/
 │       └── commands/
-│           └── seed_data.py    # Custom command to populate 8 sports & 17+ products
+│           └── seed_data.py    # Custom command to populate 8 categories and 40 products in ₹ (INR)
 │
-├── orders/                     # Shopping Cart, Checkout, and Order Records
-│   ├── models.py               # Cart, CartItem, Order, and OrderItem database models
-│   ├── views.py                # Logic for cart (add, remove, update), checkout, order receipt
-│   ├── urls.py                 # URL routes for cart and checkout (/cart/, /checkout/, etc.)
-│   ├── utils.py                # Helper function to get/create cart for guest or user
-│   ├── admin.py                # Django admin configuration for managing customer orders
-│   └── tests.py                # Automated tests for cart and checkout
+├── orders/                     # Shopping Cart & Checkout Flow
+│   ├── models.py               # Cart, CartItem, Order, and OrderItem models
+│   ├── views.py                # Cart detail, add/update/remove, checkout, and order confirmation
+│   ├── urls.py                 # Routes for /cart/, /checkout/, and order receipts
+│   └── utils.py                # Session-based cart helper supporting guest and logged-in users
 │
-├── accounts/                   # User Authentication and Customer Profiles
-│   ├── models.py               # UserProfile model storing shipping address & contact info
-│   ├── forms.py                # User registration form and profile edit form
-│   ├── views.py                # Signup, login, logout, and profile/order history logic
-│   ├── urls.py                 # URL routes for auth (/accounts/login/, /signup/, etc.)
-│   ├── admin.py                # User profile integrated into Django user admin
-│   └── tests.py                # Automated tests for authentication
+├── accounts/                   # User Authentication & Profiles
+│   ├── models.py               # UserProfile model (stores Indian delivery address & phone)
+│   ├── views.py                # Login, signup, logout, and order history dashboard
+│   └── urls.py                 # Auth routes (/accounts/login/, /accounts/signup/, /profile/)
 │
-├── templates/                  # HTML Templates rendered by Django
-│   ├── base.html               # Shared layout (Header, Navbar, Messages, Footer, Modals)
-│   ├── products/
-│   │   ├── home.html           # Homepage (Hero, 8 Categories, Featured Gear, Offer, Promise)
-│   │   ├── shop.html           # Product catalog with sidebar filters, search & sorting
-│   │   └── product_detail.html # Product page with variants, quantity picker, related items
-│   ├── orders/
-│   │   ├── cart.html           # Cart table with + / - quantity controls and price breakdown
-│   │   ├── checkout.html       # Shipping form, order summary, and mock payment options
-│   │   └── order_success.html  # Order confirmation receipt with order ID
-│   └── accounts/
-│       ├── login.html          # Clean branded login form
-│       ├── signup.html         # User registration form
-│       └── profile.html        # Athlete profile and previous orders dashboard
+├── templates/                  # HTML Templates (Bootstrap 5 + Custom CSS)
+│   ├── base.html               # Master layout (Navbar, Notification Bar, Cart Badge, Footer, Modals)
+│   ├── products/               # home.html, shop.html, product_detail.html
+│   ├── orders/                 # cart.html, checkout.html, order_success.html
+│   ├── accounts/               # login.html, signup.html, profile.html
+│   ├── 404.html                # Friendly custom 404 Not Found error page
+│   └── 500.html                # Friendly custom 500 Server Error page
 │
-├── static/                     # Static files (Custom CSS, JS, brand images)
-│   ├── css/
-│   │   └── custom.css          # Premium sporty styling, custom colors, animations
-│   ├── js/
-│   │   └── main.js             # Interactive controls (quantity adjustments, payment toggles)
-│   └── images/                 # Static brand assets
-│
-└── media/                      # Uploaded files (Product photos uploaded via Admin)
-    ├── products/
-    └── categories/
+└── static/                     # Static Assets
+    ├── css/
+    │   └── custom.css          # Sportify styling (White, Light Blue, Medium Blue, Dark Navy)
+    └── js/
+        └── main.js             # Interactive client-side logic (quantity selectors, payment toggles)
 ```
 
 ---
 
-## 🚀 Beginner's Quick-Start Guide (Step-by-Step)
+## 🚀 Quick-Start Guide (Local Development)
 
-Follow these exact commands in your terminal (PowerShell or Command Prompt).
+Follow these simple steps in your terminal (PowerShell or Command Prompt) to run Sportify locally:
 
-### Step 1: Open Terminal in the Project Directory
-Navigate into the `sportify` directory:
+### 1. Clone the Repository & Navigate to Directory
 ```powershell
-cd C:\Users\rashi\Desktop\sportify
+git clone https://github.com/rashijain-11/sportify.git
+cd sportify
 ```
 
-### Step 2: Activate the Virtual Environment
-A **virtual environment** is an isolated workspace that contains all the Python libraries for this project without affecting the rest of your computer.
-
-On Windows PowerShell:
+### 2. Set Up and Activate Virtual Environment
 ```powershell
+# Create virtual environment
+python -m venv venv
+
+# Activate on Windows PowerShell
 .\venv\Scripts\Activate.ps1
 ```
-*(If PowerShell shows an execution policy warning, you can run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` once, or activate with `.\venv\Scripts\activate.bat`)*
+*(If PowerShell restricts script execution, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` once, or use Command Prompt with `venv\Scripts\activate.bat`)*
 
-When activated, you will see `(venv)` at the beginning of your terminal prompt!
-
-### Step 3: Run Database Migrations
-Migrations translate the Python model definitions in `models.py` into database tables inside `db.sqlite3`.
+### 3. Install Dependencies
 ```powershell
-python manage.py makemigrations
-python manage.py migrate
+pip install -r requirements.txt
 ```
 
-### Step 4: Populate Seed Data (Categories & Products)
-We have included a pre-built data generator that loads 8 sports categories and 17 realistic items:
+### 4. Run Migrations & Populate Seed Catalog
 ```powershell
+python manage.py migrate
 python manage.py seed_data
 ```
-> **Default Admin Account created by the seeder:**
+
+> **Pre-configured Demo Admin Credentials:**
 > - **Username:** `admin`
 > - **Password:** `admin123`
 
-### Step 5: Start the Development Server
+### 5. Launch Development Server
 ```powershell
 python manage.py runserver
 ```
 
-Now open your web browser and navigate to:
-👉 **`http://127.0.0.1:8000/`**
-
-To view the Django Admin panel:
-👉 **`http://127.0.0.1:8000/admin/`** (Log in with `admin` / `admin123`)
+Open your browser and visit:
+- 🌐 **Storefront:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- ⚙️ **Admin Panel:** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
 ---
 
-## 🎨 Design & Palette
+## 🛍️ Features & Functional Modules
 
-Sportify is styled using a modern athletic palette:
-- **White** (`#ffffff`): Clean background and abundant whitespace
-- **Light Blue** (`#e0f2fe`, `#f0f9ff`): Soft cards, badges, and icon backgrounds
-- **Medium Blue** (`#0284c7`, `#0ea5e9`): Buttons, active navigation pills, primary highlights
-- **Dark Navy Blue** (`#0f172a`, `#1e293b`): Hero banner, typography, and footer
+- **8 Sports Categories:** Cricket, Football, Basketball, Badminton, Tennis, Gym & Fitness, Running, and Sports Accessories.
+- **40 Realistic Products:** Each seeded with high-definition sports photography, ratings, reviews, stock counts, size/variant choices, and Indian Rupee (₹) pricing.
+- **Live Search & Price Filtering:** Instant keyword query search across titles and categories, with customizable min/max price sliders.
+- **Sorting Options:** Sort items by newest arrivals, price (low to high), price (high to low), or customer ratings.
+- **Persistent Shopping Cart:** Works seamlessly for both guest visitors and authenticated users with free shipping calculation over ₹999.
+- **Mock Payment Checkout:** Simulates Credit/Debit Card, UPI / Net Banking, and Cash on Delivery (COD) orders with instant receipt generation.
+- **User Dashboard:** Dedicated profile page showing order tracking, payment status, and saved Indian delivery addresses.
+- **Fully Responsive Design:** Optimized for Desktop (3 cards/row), Tablet (2 cards/row), and Mobile (1 card/row).
 
 ---
 
-## 🧪 Running Automated Tests
+## 🧪 Automated Testing
 
-Run the built-in test suite to verify catalog queries, cart calculations, orders, and authentication:
+Sportify includes automated test suites covering catalog queries, cart calculations, order processing, and authentication:
+
 ```powershell
 python manage.py test
 ```
 
+To run the comprehensive full-site audit (validating all 40 products, categories, images, and routes):
+```powershell
+python audit.py
+```
+
 ---
 
-## 🛠️ How to Customize
+## 📄 License & Credits
 
-- **Add New Products or Categories:** Log into `http://127.0.0.1:8000/admin/` and click "+ Add" next to Products or Categories.
-- **Edit Colors or CSS:** Open `static/css/custom.css` and adjust `:root` variables at the top.
-- **Modify Layouts:** Open `templates/base.html` for header/footer, or `templates/products/home.html` for the homepage.
+Built with ❤️ for sports enthusiasts and athletes. Powered by **Python, Django, Bootstrap 5, and WhiteNoise**.
