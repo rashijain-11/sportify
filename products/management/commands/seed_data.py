@@ -88,7 +88,7 @@ class Command(BaseCommand):
                 'review_count': 38,
                 'is_featured': True,
                 'sizes': 'Short Handle, Long Handle, Harrow',
-                'image_url': 'https://images.unsplash.com/photo-1531415074868-036b1c57e329?w=800&auto=format&fit=crop&q=80'
+                'image_url': 'https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'category': created_categories['Cricket'],
@@ -140,7 +140,7 @@ class Command(BaseCommand):
                 'review_count': 27,
                 'is_featured': True,
                 'sizes': 'Small (54-56cm), Medium (57-58cm), Large (59-62cm)',
-                'image_url': 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?w=800&auto=format&fit=crop&q=80'
+                'image_url': 'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?w=800&auto=format&fit=crop&q=80'
             },
 
             # ================= FOOTBALL (5 Items) =================
@@ -274,7 +274,7 @@ class Command(BaseCommand):
                 'review_count': 28,
                 'is_featured': False,
                 'sizes': 'M, L, XL',
-                'image_url': 'https://images.unsplash.com/photo-1519766304817-4f37bda74a29?w=800&auto=format&fit=crop&q=80'
+                'image_url': 'https://images.unsplash.com/photo-1518063319789-7217e6706b04?w=800&auto=format&fit=crop&q=80'
             },
 
             # ================= BADMINTON (5 Items) =================
@@ -302,7 +302,7 @@ class Command(BaseCommand):
                 'review_count': 53,
                 'is_featured': False,
                 'sizes': 'Speed 77 (Standard), Speed 78 (Fast)',
-                'image_url': 'https://images.unsplash.com/photo-1613918431703-aa6255a6d59b?w=800&auto=format&fit=crop&q=80'
+                'image_url': 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'category': created_categories['Badminton'],
@@ -369,7 +369,7 @@ class Command(BaseCommand):
                 'review_count': 36,
                 'is_featured': False,
                 'sizes': 'Single Can (4 Balls), 3-Pack Bundle',
-                'image_url': 'https://images.unsplash.com/photo-1530915534664-4ac6423797c7?w=800&auto=format&fit=crop&q=80'
+                'image_url': 'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'category': created_categories['Tennis'],

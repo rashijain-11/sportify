@@ -54,6 +54,11 @@ def cart_add(request, product_id):
         if request.POST.get('action') == 'buy_now':
             return redirect('checkout')
 
+        # Handle 'next' redirect URL (e.g. from shop or home page)
+        next_url = request.POST.get('next')
+        if next_url:
+            return redirect(next_url)
+
     return redirect('cart_detail')
 
 

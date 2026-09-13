@@ -149,6 +149,7 @@
                         <div class="product-actions">
                             <form method="post" action="{% url 'cart_add' product.id %}">
                                 {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
                                 <input type="hidden" name="quantity" value="1">
                                 <input type="hidden" name="size" value="{{ product.size_list.0 }}">
                                 <button type="submit" class="btn btn-sport w-100 btn-sm">
@@ -225,7 +226,7 @@
             <div class="col-lg-2 col-md-4 col-6">
                 <div class="feature-box h-100">
                     <div class="feature-icon-circle">
-                        <i class="bi bi-currency-dollar"></i>
+                        <i class="bi bi-currency-rupee"></i>
                     </div>
                     <h6 class="fw-bold mb-2">Affordable Prices</h6>
                     <p class="small text-muted mb-0">Competitive wholesale-direct sports pricing.</p>

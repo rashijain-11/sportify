@@ -82,6 +82,7 @@ def shop(request, category_slug=None):
         'current_sort': sort_by,
         'search_query': query,
         'total_results': products.count(),
+        'all_products_count': Product.objects.filter(is_active=True).count(),
         'min_price': min_price or '',
         'max_price': max_price or '',
     }
