@@ -4,63 +4,63 @@ from django.contrib.auth.models import User
 from decimal import Decimal
 
 class Command(BaseCommand):
-    help = 'Seeds database with realistic sports categories, products (INR pricing), and a demo admin user'
+    help = 'Seeds database with 40 realistic sports categories, products (INR pricing), and demo admin user'
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.NOTICE("Starting Sportify database seeding with Indian Rupee (INR) pricing..."))
+        self.stdout.write(self.style.NOTICE("Starting Sportify database expansion (INR pricing)..."))
 
         # 1. Create a demo superuser if not exists
         if not User.objects.filter(username='admin').exists():
             User.objects.create_superuser('admin', 'admin@sportify.com', 'admin123')
             self.stdout.write(self.style.SUCCESS("Created demo admin user: username='admin', password='admin123'"))
 
-        # 2. Categories Data
+        # 2. Categories Data (8 Sports Categories)
         categories_data = [
             {
                 'name': 'Cricket',
-                'description': 'Premium cricket bats, leather match balls, protective batting gear, and accessories.',
+                'description': 'Premium English & Kashmir willow bats, leather match balls, batting pads, gloves, and protective helmets.',
                 'icon': 'bi-trophy',
                 'image_url': 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Football',
-                'description': 'Pro match footballs, goalkeeper gloves, shin guards, boots, and training gear.',
+                'description': 'Pro match footballs, goalkeeper gloves, shin guards, studs/boots, and training agility gear.',
                 'icon': 'bi-dribbble',
                 'image_url': 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Basketball',
-                'description': 'Indoor & outdoor composite basketballs, rims, nets, shoes, and jerseys.',
+                'description': 'Indoor & outdoor composite basketballs, rims, nets, court shoes, arm sleeves, and jerseys.',
                 'icon': 'bi-circle',
                 'image_url': 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Badminton',
-                'description': 'Ultra-light graphite rackets, goose feather shuttlecocks, kit bags, and grips.',
+                'description': 'Ultra-light graphite rackets, goose feather shuttles, kit bags, non-marking shoes, and grips.',
                 'icon': 'bi-bullseye',
                 'image_url': 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Tennis',
-                'description': 'High-performance tour tennis rackets, pressurized balls, vibration dampeners, and grips.',
+                'description': 'High-performance tour graphite rackets, pressurized match balls, tour bags, and overgrips.',
                 'icon': 'bi-disc',
                 'image_url': 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Gym & Fitness',
-                'description': 'Dumbbells, resistance bands, speed jump ropes, foam rollers, and strength gear.',
+                'description': 'Cast iron & rubber dumbbells, resistance loops, speed jump ropes, yoga mats, and strength training gear.',
                 'icon': 'bi-heart-pulse',
                 'image_url': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Running',
-                'description': 'Carbon-plated cushioned running shoes, hydration vests, compression socks, and wear.',
+                'description': 'Carbon-plated cushioned running shoes, hydration vests, compression socks, and lightweight sports gear.',
                 'icon': 'bi-lightning',
                 'image_url': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&auto=format&fit=crop&q=80'
             },
             {
                 'name': 'Sports Accessories',
-                'description': 'Insulated stainless steel bottles, gym duffels, wristbands, and stopwatches.',
+                'description': 'Insulated stainless steel bottles, gym duffels, wristbands, stopwatches, and joint support sleeves.',
                 'icon': 'bi-backpack',
                 'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80'
             },
@@ -74,9 +74,9 @@ class Command(BaseCommand):
             )
             created_categories[category.name] = category
 
-        # 3. Products Data in Indian Rupees (₹)
+        # 3. Expanded Products Data (40 Realistic Sports Products)
         products_data = [
-            # Cricket
+            # ================= CRICKET (5 Items) =================
             {
                 'category': created_categories['Cricket'],
                 'name': 'Apex Pro English Willow Cricket Bat',
@@ -108,7 +108,7 @@ class Command(BaseCommand):
                 'name': 'Aero Armor Pro Batting Gloves',
                 'description': 'Multi-split finger protection with high-density EVA foam and Pittards sheepskin leather palm for supreme grip and comfort against 90mph bowling.',
                 'price': Decimal('1899.00'),
-                'discount_price': None,
+                'discount_price': Decimal('1499.00'),
                 'stock': 25,
                 'rating': Decimal('4.8'),
                 'review_count': 19,
@@ -116,8 +116,34 @@ class Command(BaseCommand):
                 'sizes': 'Youth, Men, Extra Large',
                 'image_url': 'https://images.unsplash.com/photo-1624880357913-a8539238245b?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Cricket'],
+                'name': 'ShieldTech Lightweight Batting Legguards',
+                'description': 'Ultra-lightweight molded cane front with triple-layer knee bolster and air-cooled mesh lining. Provides top-tier protection without restricting running between wickets.',
+                'price': Decimal('3299.00'),
+                'discount_price': Decimal('2499.00'),
+                'stock': 20,
+                'rating': Decimal('4.8'),
+                'review_count': 14,
+                'is_featured': False,
+                'sizes': 'Boys, Youth, Men',
+                'image_url': 'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Cricket'],
+                'name': 'Titanium Pro Cricket Helmet with Steel Visor',
+                'description': 'High-impact outer ABS shell with reinforced steel face grille and quick-dial adjustment system. Certified to official international cricket safety standards.',
+                'price': Decimal('2899.00'),
+                'discount_price': Decimal('2199.00'),
+                'stock': 18,
+                'rating': Decimal('4.9'),
+                'review_count': 27,
+                'is_featured': True,
+                'sizes': 'Small (54-56cm), Medium (57-58cm), Large (59-62cm)',
+                'image_url': 'https://images.unsplash.com/photo-1508873696983-2df5293cb32f?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Football
+            # ================= FOOTBALL (5 Items) =================
             {
                 'category': created_categories['Football'],
                 'name': 'Strikeforce FIFA Pro Match Football',
@@ -144,8 +170,47 @@ class Command(BaseCommand):
                 'sizes': 'Size 8, Size 9, Size 10, Size 11',
                 'image_url': 'https://images.unsplash.com/photo-1589487391730-58f20eb2c308?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Football'],
+                'name': 'Predator Strike Firm Ground Football Boots',
+                'description': 'High-tensile synthetic upper with embossed striking zones for spin control. Lightweight TPU outsole with conical studs offers razor-sharp traction on natural grass.',
+                'price': Decimal('4999.00'),
+                'discount_price': Decimal('3799.00'),
+                'stock': 22,
+                'rating': Decimal('4.9'),
+                'review_count': 51,
+                'is_featured': True,
+                'sizes': 'UK 7, UK 8, UK 9, UK 10, UK 11',
+                'image_url': 'https://images.unsplash.com/photo-1511886929837-354d827aae26?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Football'],
+                'name': 'ImpactGuard Pro Ankle Shin Guards',
+                'description': 'Anatomical low-profile polypropylene shell backed with thick EVA foam padding for robust shock dispersal. Includes breathable compression calf sleeve.',
+                'price': Decimal('899.00'),
+                'discount_price': Decimal('649.00'),
+                'stock': 40,
+                'rating': Decimal('4.6'),
+                'review_count': 18,
+                'is_featured': False,
+                'sizes': 'Small, Medium, Large',
+                'image_url': 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Football'],
+                'name': 'Speed & Agility Training Marker Cones (Set of 20)',
+                'description': 'Flexible, shatterproof bright PE disc cones with steel carry handle. Essential for dribbling drills, shuttle sprints, and tactical boundary marking.',
+                'price': Decimal('999.00'),
+                'discount_price': Decimal('699.00'),
+                'stock': 50,
+                'rating': Decimal('4.7'),
+                'review_count': 33,
+                'is_featured': False,
+                'sizes': 'Set of 20, Set of 50',
+                'image_url': 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Basketball
+            # ================= BASKETBALL (5 Items) =================
             {
                 'category': created_categories['Basketball'],
                 'name': 'PureBounce All-Court Composite Basketball',
@@ -172,8 +237,47 @@ class Command(BaseCommand):
                 'sizes': 'S, M, L, XL, XXL',
                 'image_url': 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Basketball'],
+                'name': 'DunkMaster High-Top Basketball Shoes',
+                'description': 'Engineered with responsive Zoom air cushioning and padded collar for superior ankle lockdown during sharp crossovers and hard rebound landings.',
+                'price': Decimal('5499.00'),
+                'discount_price': Decimal('4299.00'),
+                'stock': 20,
+                'rating': Decimal('4.9'),
+                'review_count': 42,
+                'is_featured': True,
+                'sizes': 'UK 7, UK 8, UK 9, UK 10, UK 11, UK 12',
+                'image_url': 'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Basketball'],
+                'name': 'Heavy-Duty Breakaway Basketball Rim & Net',
+                'description': 'Solid steel 18-inch regulation rim with dual spring-loaded flex mechanism to absorb dunk forces. Includes all-weather braided nylon net.',
+                'price': Decimal('2999.00'),
+                'discount_price': Decimal('2299.00'),
+                'stock': 15,
+                'rating': Decimal('4.7'),
+                'review_count': 19,
+                'is_featured': False,
+                'sizes': 'Standard Regulation 18"',
+                'image_url': 'https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Basketball'],
+                'name': 'Shooter Compression Arm Sleeves (Pair)',
+                'description': 'Graduated compression improves blood circulation in the shooting arm and accelerates recovery. Non-slip silicone bands ensure a secure fit throughout games.',
+                'price': Decimal('799.00'),
+                'discount_price': Decimal('499.00'),
+                'stock': 45,
+                'rating': Decimal('4.8'),
+                'review_count': 28,
+                'is_featured': False,
+                'sizes': 'M, L, XL',
+                'image_url': 'https://images.unsplash.com/photo-1519766304817-4f37bda74a29?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Badminton
+            # ================= BADMINTON (5 Items) =================
             {
                 'category': created_categories['Badminton'],
                 'name': 'AeroSpeed Ultra-Light Carbon Racket 4U',
@@ -200,8 +304,47 @@ class Command(BaseCommand):
                 'sizes': 'Speed 77 (Standard), Speed 78 (Fast)',
                 'image_url': 'https://images.unsplash.com/photo-1613918431703-aa6255a6d59b?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Badminton'],
+                'name': 'ProCourt Non-Marking Indoor Badminton Shoes',
+                'description': 'Gum rubber sole engineered with hexagonal grip pattern for instantaneous lateral agility. Features anti-torsion TPU midfoot shank and shock-dampening heel insert.',
+                'price': Decimal('3999.00'),
+                'discount_price': Decimal('2999.00'),
+                'stock': 25,
+                'rating': Decimal('4.8'),
+                'review_count': 37,
+                'is_featured': True,
+                'sizes': 'UK 6, UK 7, UK 8, UK 9, UK 10, UK 11',
+                'image_url': 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Badminton'],
+                'name': 'Thermal Guard 6-Racket Tournament Kit Bag',
+                'description': 'Dual main compartments with thermal foil insulation to protect string tension from ambient temperature shifts. Features ventilated shoe tunnel and backpack straps.',
+                'price': Decimal('2699.00'),
+                'discount_price': Decimal('1999.00'),
+                'stock': 20,
+                'rating': Decimal('4.7'),
+                'review_count': 21,
+                'is_featured': False,
+                'sizes': '6-Racket Capacity',
+                'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Badminton'],
+                'name': 'Tacky Overgrip Tape Pack of 5',
+                'description': 'Super-absorbent polyurethane overgrip with micro-perforations to wick palm perspiration during high-intensity rallies.',
+                'price': Decimal('699.00'),
+                'discount_price': Decimal('449.00'),
+                'stock': 60,
+                'rating': Decimal('4.9'),
+                'review_count': 64,
+                'is_featured': False,
+                'sizes': 'Assorted Colors, All Black, All White',
+                'image_url': 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Tennis
+            # ================= TENNIS (5 Items) =================
             {
                 'category': created_categories['Tennis'],
                 'name': 'TourSpin Master Graphite Tennis Racket',
@@ -228,8 +371,47 @@ class Command(BaseCommand):
                 'sizes': 'Single Can (4 Balls), 3-Pack Bundle',
                 'image_url': 'https://images.unsplash.com/photo-1530915534664-4ac6423797c7?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Tennis'],
+                'name': 'CourtElite Tennis Backpack with Racket Holder',
+                'description': 'Dedicated zippered racket pocket holds up to 2 rackets with handle covers. Spacious main compartment with organizer sleeves and separate dirty gear bag.',
+                'price': Decimal('3299.00'),
+                'discount_price': Decimal('2499.00'),
+                'stock': 18,
+                'rating': Decimal('4.8'),
+                'review_count': 23,
+                'is_featured': False,
+                'sizes': 'Standard (32L)',
+                'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Tennis'],
+                'name': 'Silicone Tennis Racket Vibration Dampeners (Pack of 3)',
+                'description': 'Grooved silicone rubber dampeners reduce string vibration and harsh feedback, protecting your elbow from repetitive strain injury.',
+                'price': Decimal('599.00'),
+                'discount_price': Decimal('399.00'),
+                'stock': 50,
+                'rating': Decimal('4.8'),
+                'review_count': 41,
+                'is_featured': False,
+                'sizes': 'Pack of 3',
+                'image_url': 'https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Tennis'],
+                'name': 'Grand Slam Performance Tennis Polo',
+                'description': 'Tailored athletic polo shirt with raglan sleeves and UV 50+ sun protection. Quick-drying lightweight weave keeps body temperature regulated under blazing sun.',
+                'price': Decimal('1699.00'),
+                'discount_price': Decimal('1299.00'),
+                'stock': 30,
+                'rating': Decimal('4.7'),
+                'review_count': 19,
+                'is_featured': False,
+                'sizes': 'S, M, L, XL, XXL',
+                'image_url': 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Gym & Fitness
+            # ================= GYM & FITNESS (5 Items) =================
             {
                 'category': created_categories['Gym & Fitness'],
                 'name': 'HexGrip Rubber Encased Dumbbell Set',
@@ -256,8 +438,47 @@ class Command(BaseCommand):
                 'sizes': '5-Band Full Set',
                 'image_url': 'https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Gym & Fitness'],
+                'name': 'Speed Master Ball-Bearing Steel Jump Rope',
+                'description': 'High-velocity 360-degree dual ball bearing mechanism prevents tangling and allows smooth double-unders. Includes adjustable 3-meter vinyl-coated steel cable.',
+                'price': Decimal('999.00'),
+                'discount_price': Decimal('699.00'),
+                'stock': 50,
+                'rating': Decimal('4.8'),
+                'review_count': 38,
+                'is_featured': False,
+                'sizes': 'Adjustable 3M Cable',
+                'image_url': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Gym & Fitness'],
+                'name': 'EcoGrip 8mm Dual-Texture Exercise & Yoga Mat',
+                'description': 'Extra-thick 8mm high-density TPE cushioning protects joints and spine during floor workouts, calisthenics, and yoga. Non-slip ripple grip surface.',
+                'price': Decimal('1999.00'),
+                'discount_price': Decimal('1499.00'),
+                'stock': 30,
+                'rating': Decimal('4.8'),
+                'review_count': 52,
+                'is_featured': True,
+                'sizes': '183cm x 61cm x 8mm',
+                'image_url': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Gym & Fitness'],
+                'name': 'Adjustable Heavy Hand Grip Strengthener (10-60kg)',
+                'description': 'Rotary dial allows tension adjustment between 10kg and 60kg. Built with heavy-duty alloy steel springs and rubberized ergonomic non-slip handle.',
+                'price': Decimal('699.00'),
+                'discount_price': Decimal('449.00'),
+                'stock': 40,
+                'rating': Decimal('4.7'),
+                'review_count': 29,
+                'is_featured': False,
+                'sizes': 'Standard (10-60kg Tension)',
+                'image_url': 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Running
+            # ================= RUNNING (5 Items) =================
             {
                 'category': created_categories['Running'],
                 'name': 'CloudStride Carbon Running Shoes',
@@ -284,8 +505,47 @@ class Command(BaseCommand):
                 'sizes': 'Small/Medium, Large/X-Large',
                 'image_url': 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&auto=format&fit=crop&q=80'
             },
+            {
+                'category': created_categories['Running'],
+                'name': 'Anti-Blister Running Compression Socks (Pack of 3)',
+                'description': 'Seamless toe design with targeted plantar arch band and moisture-wicking CoolMax yarn to prevent blisters and reduce calf fatigue.',
+                'price': Decimal('1199.00'),
+                'discount_price': Decimal('849.00'),
+                'stock': 50,
+                'rating': Decimal('4.8'),
+                'review_count': 44,
+                'is_featured': False,
+                'sizes': 'M (UK 6-8), L (UK 9-11)',
+                'image_url': 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Running'],
+                'name': 'Bounce-Free Slim Running Waist Belt Pouch',
+                'description': 'Expandable waterproof Lycra belt fits large smartphones, energy gels, and keys. Features reflective safety piping and earphone cord pass-through.',
+                'price': Decimal('799.00'),
+                'discount_price': Decimal('549.00'),
+                'stock': 40,
+                'rating': Decimal('4.7'),
+                'review_count': 31,
+                'is_featured': False,
+                'sizes': 'Adjustable Waist (26"-42")',
+                'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Running'],
+                'name': 'PaceMaster GPS Sports Smartwatch & Heart Rate Tracker',
+                'description': 'Built-in GPS tracks real-time running pace, distance, elevation, and VO2 max. 14-day battery life, 50m water resistance, and syncs with Strava and Apple Health.',
+                'price': Decimal('8999.00'),
+                'discount_price': Decimal('6499.00'),
+                'stock': 15,
+                'rating': Decimal('4.9'),
+                'review_count': 62,
+                'is_featured': True,
+                'sizes': 'Obsidian Black, Cobalt Blue',
+                'image_url': 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80'
+            },
 
-            # Sports Accessories
+            # ================= SPORTS ACCESSORIES (5 Items) =================
             {
                 'category': created_categories['Sports Accessories'],
                 'name': 'HydroArmor Vacuum Insulated Sports Bottle 32oz',
@@ -311,15 +571,59 @@ class Command(BaseCommand):
                 'is_featured': False,
                 'sizes': 'Medium (35L), Large (45L)',
                 'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Sports Accessories'],
+                'name': 'Pro Referee & Coach Digital Stopwatch & Whistle Set',
+                'description': 'Precision 1/100th second chronograph stopwatch with lap/split time memory and date/alarm display. Paired with a pealess stainless steel whistle.',
+                'price': Decimal('899.00'),
+                'discount_price': Decimal('599.00'),
+                'stock': 40,
+                'rating': Decimal('4.7'),
+                'review_count': 26,
+                'is_featured': False,
+                'sizes': 'Standard Stopwatch + Whistle Kit',
+                'image_url': 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Sports Accessories'],
+                'name': 'Fast-Dry Microfiber Sports Towel with Zip Pocket',
+                'description': 'Absorbs 4x its weight in moisture and dries 3x faster than cotton. Corner zipper pocket securely holds locker keys, gym card, and phone.',
+                'price': Decimal('699.00'),
+                'discount_price': Decimal('449.00'),
+                'stock': 50,
+                'rating': Decimal('4.8'),
+                'review_count': 39,
+                'is_featured': False,
+                'sizes': 'Compact (40x80cm), Full (60x120cm)',
+                'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80'
+            },
+            {
+                'category': created_categories['Sports Accessories'],
+                'name': 'ProActive Knee & Patella Compression Support Sleeve',
+                'description': 'Anatomical 3D circular knit with lateral spring stabilizers and silicone patella gel pad. Delivers targeted compression for running, basketball, and squats.',
+                'price': Decimal('999.00'),
+                'discount_price': Decimal('699.00'),
+                'stock': 45,
+                'rating': Decimal('4.9'),
+                'review_count': 57,
+                'is_featured': True,
+                'sizes': 'M (35-41cm), L (42-47cm), XL (48-55cm)',
+                'image_url': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&auto=format&fit=crop&q=80'
             }
         ]
+
+        created_count = 0
+        updated_count = 0
 
         for p_data in products_data:
             product, created = Product.objects.update_or_create(
                 name=p_data['name'],
                 defaults=p_data
             )
-            action = "Created" if created else "Updated"
-            self.stdout.write(f"{action} product: {product.name} (INR {product.price})")
+            if created:
+                created_count += 1
+            else:
+                updated_count += 1
 
-        self.stdout.write(self.style.SUCCESS("Seeding in Indian Rupees (INR) successfully completed!"))
+        self.stdout.write(self.style.SUCCESS(f"Successfully seeded {len(products_data)} products ({created_count} created, {updated_count} updated)!"))
