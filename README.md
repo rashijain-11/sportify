@@ -1,5 +1,8 @@
 # ⚡ Sportify — Modern Sports Equipment & Accessories E-Commerce
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/rashijain-11/sportify)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/rashijain-11/sportify)
+
 Sportify is a modern, responsive, and beginner-friendly e-commerce web application built using **Python and Django**. It allows users to browse sports gear across 8 popular sports categories, filter by price and sport, inspect high-resolution product details, select sizes/variants, manage a persistent shopping cart, checkout through a mock payment gateway, and manage user accounts with full order histories.
 
 ---
