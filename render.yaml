@@ -3,6 +3,7 @@ services:
     name: sportify
     runtime: python
     plan: free
+    region: singapore
     buildCommand: "./build.sh"
     startCommand: "gunicorn sportify.wsgi:application"
     envVars:
